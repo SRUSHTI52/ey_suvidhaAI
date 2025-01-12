@@ -35,7 +35,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           _titles[_currentIndex], // Dynamic title based on the current tab
           style: TextStyle(color: Colors.white), // White title text for AppBar
         ),
-        backgroundColor: Color(0xFF6C63FF),
+        backgroundColor: Color(0xFF14267C),
       ),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -45,7 +45,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             _currentIndex = index;
           });
         },
-        selectedItemColor: Color(0xFF6C63FF),
+        selectedItemColor: Color(0xFF14267C),
         unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(
@@ -84,14 +84,14 @@ class DashboardContent extends StatelessWidget {
               width: double.infinity,
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Color(0xFF6C63FF),
+                color: Color(0xFF14267C),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Welcome Back, User!',
+                    'Welcome Back, John!',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -125,7 +125,7 @@ class DashboardContent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildAnimatedStatisticsCard(
-                  title: 'Schemes Explored',
+                  title: 'Schemes   Explored',
                   endValue: 15, // End value for animation
                   color: Colors.purple,
                 ),
@@ -154,7 +154,7 @@ class DashboardContent extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: ListTile(
-                leading: Icon(Icons.star, color: Color(0xFF6C63FF)),
+                leading: Icon(Icons.agriculture, color: Color(0xFF14267C)),
                 title: Text('PM Kisan Scheme'),
                 subtitle: Text('Financial aid for small farmers.'),
                 trailing: Icon(Icons.arrow_forward, color: Colors.grey),
@@ -169,7 +169,7 @@ class DashboardContent extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: ListTile(
-                leading: Icon(Icons.star, color: Color(0xFF6C63FF)),
+                leading: Icon(Icons.health_and_safety, color: Color(0xFF14267C)),
                 title: Text('Ayushman Bharat'),
                 subtitle: Text('Health insurance for families.'),
                 trailing: Icon(Icons.arrow_forward, color: Colors.grey),

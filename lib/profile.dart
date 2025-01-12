@@ -33,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
                   right: 0,
                   child: CircleAvatar(
                     radius: 20,
-                    backgroundColor: Color(0xFF6C63FF),
+                    backgroundColor: Color(0xFF14267C),
                     child: IconButton(
                       icon: Icon(Icons.camera_alt, color: Colors.white, size: 20),
                       onPressed: () {
@@ -81,7 +81,7 @@ class ProfileScreen extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF6C63FF),
+                backgroundColor: Color(0xFF14267C),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -102,7 +102,7 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildProfileRow(IconData icon, String label, String value) {
     return Row(
       children: [
-        Icon(icon, color: Color(0xFF6C63FF), size: 30),
+        Icon(icon, color: Color(0xFF14267C), size: 30),
         SizedBox(width: 16),
         Expanded(
           child: Column(

@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
                   Icon(
                     Icons.lock_outline,
                     size: 80,
-                    color: Color(0xFF6C63FF), // Matching purple color
+                    color: Color(0xFF14267C), // Matching purple color
                   ),
                   SizedBox(height: 20),
                   Text(
@@ -73,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF6C63FF), // Purple button
+                              backgroundColor: Color(0xFF14267C), // Purple button
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -112,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                       "Don't have an account? Sign Up",
                       style: TextStyle(
                         fontSize: 14,
-                        color: Color(0xFF6C63FF), // Purple color for clickable text
+                        color: Color(0xFF14267C), // Purple color for clickable text
                         fontWeight: FontWeight.bold,
                       ),
                     ),

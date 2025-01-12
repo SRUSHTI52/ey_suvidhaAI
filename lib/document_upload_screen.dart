@@ -34,7 +34,7 @@ class _DocumentUploadScreenState extends State<DocumentUploadScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Upload Documents'),
-        backgroundColor: Color(0xFF6C63FF),
+        backgroundColor: Color(0xFF14267C),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -51,7 +51,7 @@ class _DocumentUploadScreenState extends State<DocumentUploadScreen> {
                   style: TextStyle(color: Colors.white), // White text
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF6C63FF),
+                  backgroundColor: Color(0xFF14267C),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

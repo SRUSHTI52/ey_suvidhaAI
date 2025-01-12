@@ -18,12 +18,13 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.account_balance, size: 100, color: Colors.blue),
-            SizedBox(height: 20),
-            Text(
-              'Suvidha AI',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            // Include your image here
+            Image.asset(
+              'assets/images/logo.png', // Path to your image
+              width: 250, // Adjust size as needed
+              height: 250,
             ),
+            SizedBox(height: 20),
           ],
         ),
       ),

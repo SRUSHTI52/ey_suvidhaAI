@@ -12,7 +12,7 @@ class SignUpScreen extends StatelessWidget {
       backgroundColor: Color(0xFFF5F5F5), // Light gray background
       appBar: AppBar(
         title: Text('Sign Up'),
-        backgroundColor: Color(0xFF6C63FF),
+        backgroundColor: Color(0xFF14267C),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -90,7 +90,7 @@ class SignUpScreen extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF6C63FF), // Purple button
+                    backgroundColor: Color(0xFF14267C), // Purple button
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

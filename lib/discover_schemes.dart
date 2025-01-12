@@ -97,7 +97,7 @@ class DiscoverSchemesScreen extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF6C63FF),
+                    backgroundColor: Color(0xFF14267C),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),

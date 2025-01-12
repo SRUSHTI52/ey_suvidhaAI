@@ -10,8 +10,9 @@ class ApplicationFormScreen extends StatefulWidget {
 
 class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _ageController = TextEditingController();
-  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController(text: "John Doe");
+  final TextEditingController _ageController = TextEditingController(text: "18");
+  final TextEditingController _genderController = TextEditingController(text: "Male");
   final TextEditingController _incomeController = TextEditingController();
   final TextEditingController _maritalStatusController = TextEditingController();
   final TextEditingController _areaController = TextEditingController();
@@ -33,6 +34,10 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
     );
 
     final url = Uri.parse('http://192.168.0.106:5000/recommend');
+
+   // final url = Uri.parse('http://127.0.0.1:5000/recommend');
+
+    //final url = Uri.parse('http://100.65.109.10:5000/recommend');
     try {
       print('Sending request to: $url');
       final body = json.encode({
@@ -95,7 +100,7 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Application Form'),
-        backgroundColor: Color(0xFF6C63FF),
+        backgroundColor: Color(0xFF14267C),
       ),
       body: Form(
         key: _formKey,
@@ -105,6 +110,7 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
             child: Column(
               children: [
                 // Form Fields
+                _buildTextField(_nameController, 'Full Name'),
                 _buildTextField(_ageController, 'Age', TextInputType.number),
                 _buildTextField(_genderController, 'Gender'),
                 _buildTextField(_incomeController, 'Income', TextInputType.number),
@@ -120,7 +126,7 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
                 ElevatedButton(
                   onPressed: getRecommendations,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF6C63FF),
+                    backgroundColor: Color(0xFF14267C),
                   ),
                   child: Text('Get Recommendations'),
                 ),
@@ -128,26 +134,143 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
 
                 // Display Recommendations
                 ...recommendations.map((rec) => Card(
-                  child: ListTile(
-                    title: Text(rec['scheme_name']),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Benefits:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(rec['benefits']),
-                        SizedBox(height: 8.0),
-                        Text(
-                          'Required Documents:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text((rec['required_documents'] as List<dynamic>).join(', ')),
-                      ],
+                  elevation: 2.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    side: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Colors.white, Colors.grey.shade50],
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            rec['scheme_name'],
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF1A237E),
+                              letterSpacing: 0.3,
+                            ),
+                          ),
+                          SizedBox(height: 16.0),
+
+                          // Benefits Section (Regular text format)
+                          Container(
+                            padding: EdgeInsets.all(12.0),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade50.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.star_outline,
+                                        size: 20.0,
+                                        color: Color(0xFF1A237E)),
+                                    SizedBox(width: 8.0),
+                                    Text(
+                                      'Benefits',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xFF1A237E),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 8.0),
+                                Text(
+                                  rec['benefits'],
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    color: Colors.black87,
+                                    height: 1.5,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 16.0),
+
+                          // Required Documents Section (Bullet points)
+                          Container(
+                            padding: EdgeInsets.all(12.0),
+                            decoration: BoxDecoration(
+                              color: Colors.orange.shade50.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.document_scanner_outlined,
+                                        size: 20.0,
+                                        color: Color(0xFFE65100)),
+                                    SizedBox(width: 8.0),
+                                    Text(
+                                      'Required Documents',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xFFE65100),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 12.0),
+                                // Display documents as bullet points
+                                ...(rec['required_documents'] as List<dynamic>).map((doc) => Padding(
+                                  padding: EdgeInsets.only(bottom: 8.0),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 6.0),
+                                        child: Container(
+                                          width: 5.0,
+                                          height: 5.0,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFE65100),
+                                            shape: BoxShape.circle,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 12.0),
+                                      Expanded(
+                                        child: Text(
+                                          doc,
+                                          style: TextStyle(
+                                            fontSize: 14.0,
+                                            color: Colors.black87,
+                                            height: 1.5,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )).toList(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                )),
+                ))
+
               ],
             ),
           ),

@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.suvidha_ai_app"
+    namespace "com.example.suvidha_ai_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 

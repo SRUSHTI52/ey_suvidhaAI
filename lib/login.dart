@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dashboard.dart';
 import 'signup.dart'; // Import the SignUpScreen
-
+import 'biometric_auth_screen.dart';
 class LoginScreen extends StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
 
@@ -69,7 +69,7 @@ class LoginScreen extends StatelessWidget {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DashboardScreen()),
+                                    builder: (context) => BiometricAuthScreen()),
                               );
                             },
                             style: ElevatedButton.styleFrom(

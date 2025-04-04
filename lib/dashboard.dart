@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'qr_scanner_screen.dart';
 import 'discover_schemes.dart'; // File for Discover Schemes screen
 import 'document_upload_screen.dart'; // File for Document Upload screen
 import 'profile.dart'; // File for Profile screen
@@ -31,11 +32,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //title: Text('Dashboard'),
         title: Text(
-          _titles[_currentIndex], // Dynamic title based on the current tab
-          style: TextStyle(color: Colors.white), // White title text for AppBar
+          'Dashboard',
+          style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Color(0xFF14267C),
+
+        actions: [
+          IconButton(
+            icon: Icon(Icons.qr_code_scanner, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => QRScannerScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -79,6 +93,7 @@ class DashboardContent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             // Welcome Banner
             Container(
               width: double.infinity,

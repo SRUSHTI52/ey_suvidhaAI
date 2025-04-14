@@ -164,7 +164,10 @@ class _DocumentUploadScreenState extends State<DocumentUploadScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Upload Documents'),
+        title: Text(
+          'Upload Documents',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Color(0xFF14267C),
       ),
       body: Padding(

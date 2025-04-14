@@ -1,110 +1,125 @@
 import 'package:flutter/material.dart';
-import 'dashboard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'biometric_auth_screen.dart'; // Make sure this is the correct import path
 
-class SignUpScreen extends StatelessWidget {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class SignUpScreen extends StatefulWidget {
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future<void> registerUser() async {
+    try {
+      // Firebase Auth
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailController.text.trim(),
+              password: passwordController.text.trim());
+
+      String uid = userCredential.user!.uid;
+
+      // Firestore Save
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({
+        'name': nameController.text.trim(),
+        'phone': phoneController.text.trim(),
+        'email': emailController.text.trim(),
+      });
+
+      Navigator.pushAndRemoveUntil(
+  context,
+  MaterialPageRoute(builder: (context) => BiometricAuthScreen()), // or DashboardScreen()
+  (route) => false,
+);
+ // go back to login
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Sign up failed: ${e.toString()}')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5), // Light gray background
-      appBar: AppBar(
-        title: Text('Sign Up'),
-        backgroundColor: Color(0xFF14267C),
-      ),
+      backgroundColor: Color(0xFFF5F5F5),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
+        child: Center(
+          child: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Icon(Icons.person_add_alt_1,
+                    size: 80, color: Color(0xFF14267C)),
+                SizedBox(height: 20),
                 Text(
-                  'Create Your Account',
+                  'Create Account',
                   style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
                 ),
                 SizedBox(height: 10),
-                Text(
-                  'Fill in the details to sign up.',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[700],
-                  ),
-                ),
+                Text('Sign up to get started',
+                    style:
+                        TextStyle(fontSize: 16, color: Colors.grey[700])),
                 SizedBox(height: 30),
-
-                // Name Field
-                TextField(
-                  controller: nameController,
-                  decoration: InputDecoration(
-                    labelText: 'Full Name',
-                    prefixIcon: Icon(Icons.person),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        _buildTextField(nameController, "Full Name", Icons.person),
+                        SizedBox(height: 16),
+                        _buildTextField(phoneController, "Phone Number", Icons.phone,
+                            inputType: TextInputType.phone),
+                        SizedBox(height: 16),
+                        _buildTextField(emailController, "Email", Icons.email,
+                            inputType: TextInputType.emailAddress),
+                        SizedBox(height: 16),
+                        _buildTextField(passwordController, "Password", Icons.lock,
+                            isPassword: true),
+                        SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: registerUser,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF14267C),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 30),
+                          ),
+                          child: Text(
+                            'Sign Up',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  keyboardType: TextInputType.name,
                 ),
                 SizedBox(height: 20),
-
-                // Phone Field
-                TextField(
-                  controller: phoneController,
-                  decoration: InputDecoration(
-                    labelText: 'Phone Number',
-                    prefixIcon: Icon(Icons.phone),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  keyboardType: TextInputType.phone,
-                ),
-                SizedBox(height: 20),
-
-                // Password Field
-                TextField(
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    prefixIcon: Icon(Icons.lock),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  obscureText: true,
-                ),
-                SizedBox(height: 30),
-
-                // Sign Up Button
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => DashboardScreen()),
-                    );
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF14267C), // Purple button
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Sign Up',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  child: Text(
+                    "Already have an account? Login",
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF14267C),
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -114,4 +129,24 @@ class SignUpScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildTextField(TextEditingController controller, String label,
+      IconData icon, {
+        bool isPassword = false,
+        TextInputType inputType = TextInputType.text,
+      }) {
+    return TextField(
+      controller: controller,
+      obscureText: isPassword,
+      keyboardType: inputType,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(icon),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+  }
 }
+

@@ -17,17 +17,29 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -40,49 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDLMlH2jPiu7IyWWybBlxDi54b_ye2Ew6o',
-    appId: '1:714108448982:web:fc06ec81314dfe0f461977',
-    messagingSenderId: '714108448982',
-    projectId: 'ey-suvidha-ai',
-    authDomain: 'ey-suvidha-ai.firebaseapp.com',
-    storageBucket: 'ey-suvidha-ai.firebasestorage.app',
-    measurementId: 'G-LR40BBQT5R',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBZ4CdvLwP3qFi16pCY1mhsvXRrYB-DqWI',
-    appId: '1:714108448982:android:d37294d35e91a64b461977',
-    messagingSenderId: '714108448982',
-    projectId: 'ey-suvidha-ai',
-    storageBucket: 'ey-suvidha-ai.firebasestorage.app',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyANlM53M9e2ylnP3rXLCFGGo4v8Q_F6rlI',
-    appId: '1:714108448982:ios:2fababecf87bf6f0461977',
-    messagingSenderId: '714108448982',
-    projectId: 'ey-suvidha-ai',
-    storageBucket: 'ey-suvidha-ai.firebasestorage.app',
-    iosBundleId: 'com.example.suvidhaAiApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyANlM53M9e2ylnP3rXLCFGGo4v8Q_F6rlI',
-    appId: '1:714108448982:ios:2fababecf87bf6f0461977',
-    messagingSenderId: '714108448982',
-    projectId: 'ey-suvidha-ai',
-    storageBucket: 'ey-suvidha-ai.firebasestorage.app',
-    iosBundleId: 'com.example.suvidhaAiApp',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDLMlH2jPiu7IyWWybBlxDi54b_ye2Ew6o',
-    appId: '1:714108448982:web:51ba34b827e39950461977',
-    messagingSenderId: '714108448982',
-    projectId: 'ey-suvidha-ai',
-    authDomain: 'ey-suvidha-ai.firebaseapp.com',
-    storageBucket: 'ey-suvidha-ai.firebasestorage.app',
-    measurementId: 'G-53T8ERSCPH',
+    apiKey: 'AIzaSyB4VsYySgCaCyrbcMOilpksK33EIBW8zt0',
+    appId: '1:358940155589:android:0a00e1517a64b73b851aac',
+    messagingSenderId: '358940155589',
+    projectId: 'suvidhaai',
+    storageBucket: 'suvidhaai.firebasestorage.app',
   );
 }

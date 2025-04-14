@@ -1,104 +1,103 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'login.dart';
 
 class ProfileScreen extends StatelessWidget {
+  final user = FirebaseAuth.instance.currentUser;
+
+  Future<Map<String, dynamic>> fetchUserData() async {
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
+    return doc.data() ?? {};
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Profile Heading
-          Text(
-            'Your Profile',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          SizedBox(height: 20),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Your Profile', style: TextStyle(color: Colors.white)),
+        backgroundColor: Color(0xFF14267C),
+      ),
+      body: FutureBuilder<Map<String, dynamic>>(
+        future: fetchUserData(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
 
-          // Profile Picture Section
-          Center(
-            child: Stack(
+          final data = snapshot.data!;
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage(
-                      'assets/images/profile_pic.jpg'), // Add a placeholder image
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
+                // Profile Picture
+                Center(
                   child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Color(0xFF14267C),
-                    child: IconButton(
-                      icon: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                      onPressed: () {
-                        // Future functionality for changing profile picture
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Change Profile Picture coming soon!')),
-                        );
-                      },
+                    radius: 60,
+                    backgroundImage: AssetImage('assets/images/profile_pic.jpg'),
+                  ),
+                ),
+                SizedBox(height: 20),
+
+                // User Details
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        _buildProfileRow(Icons.person, 'Name', data['name']),
+                        Divider(),
+                        _buildProfileRow(Icons.phone, 'Phone', data['phone']),
+                        Divider(),
+                        _buildProfileRow(Icons.email, 'Email', data['email']),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
+
+                // Logout Button
+                Center(
+                  child: ElevatedButton.icon(
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (_) => LoginScreen()),
+                        (route) => false,
+                      );
+                    },
+                    icon: Icon(Icons.logout, color: Colors.white),
+                    label: Text(
+                      "Logout",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.white,),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF14267C),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 5,
                     ),
                   ),
                 ),
               ],
             ),
-          ),
-          SizedBox(height: 20),
-
-          // Profile Details Section
-          Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  _buildProfileRow(Icons.person, 'Name', 'John Doe'),
-                  Divider(),
-                  _buildProfileRow(Icons.email, 'Email', 'johndoe@example.com'),
-                  Divider(),
-                  _buildProfileRow(Icons.phone, 'Phone', '+91-9876543210'),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
-
-          // Edit Profile Button
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                // Add edit functionality
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Edit Profile functionality coming soon!')),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF14267C),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              ),
-              child: Text(
-                'Edit Profile',
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
 
-  // Helper Widget to Build Each Profile Row
   Widget _buildProfileRow(IconData icon, String label, String value) {
     return Row(
       children: [
@@ -108,21 +107,13 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                ),
-              ),
-              Text(
-                value,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
+              Text(label,
+                  style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+              Text(value,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black)),
             ],
           ),
         ),

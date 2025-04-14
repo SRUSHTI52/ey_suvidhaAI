@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "714108448982",
-    "project_id": "ey-suvidha-ai",
-    "storage_bucket": "ey-suvidha-ai.firebasestorage.app"
+    "project_number": "358940155589",
+    "project_id": "suvidhaai",
+    "storage_bucket": "suvidhaai.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:714108448982:android:d37294d35e91a64b461977",
+        "mobilesdk_app_id": "1:358940155589:android:0a00e1517a64b73b851aac",
         "android_client_info": {
           "package_name": "com.example.suvidha_ai_app"
         }
@@ -15,7 +15,26 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBZ4CdvLwP3qFi16pCY1mhsvXRrYB-DqWI"
+          "current_key": "AIzaSyB4VsYySgCaCyrbcMOilpksK33EIBW8zt0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358940155589:android:d8c366ed01ce422c851aac",
+        "android_client_info": {
+          "package_name": "io.flutter.plugins.flutter_plugin_android_lifecycle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4VsYySgCaCyrbcMOilpksK33EIBW8zt0"
         }
       ],
       "services": {
